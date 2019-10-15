@@ -94,8 +94,28 @@ class Prova
         return $total;
     }
 
-    public function QuestaoQuatro(int $n, array $a, array $b, array $v)
+    public function QuestaoQuatro(int $n, array $a, array $b, array $v): int
     {
+        $list = array_fill(1, $n, 0);
 
+        // Cria um array associativo de inicio e fim
+        $startEndAssociated = [];
+        foreach ($a as $key => $value) {
+            $startEndAssociated[$key] = [
+                'from'  => $value,
+                'until' => $b[$key]
+            ];
+        }
+
+        foreach ($startEndAssociated as $values) {
+            $nextValue = current($v);
+            next($v);
+
+            for ($x = $values['from']; $x <= $values['until']; ++$x) {
+                $list[$x] += $nextValue;
+            }
+        }
+
+        return max($list);
     }
 }
